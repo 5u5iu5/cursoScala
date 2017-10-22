@@ -37,8 +37,9 @@ class Sesion2Test extends FlatSpec with Matchers with PropertyChecks{
   "duplicate" should "duplicate n times to elements list" in {
 
     val resultList = duplicates(list, 2)
-    resultList.size shouldEqual (12)
-    resultList(1) shouldEqual (2)
+    resultList.foreach(println)
+    resultList.size shouldEqual (10)
     resultList(2) shouldEqual (2)
+    resultList(3) shouldEqual (2)
   }
 }

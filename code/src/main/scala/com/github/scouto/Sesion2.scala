@@ -53,10 +53,7 @@ object Sesion2 {
 
 
   def duplicates(list: List[Int], k: Int): List[Int] = {
-    val listResult = List(0)
-    list.foreach(e => List.concat(listResult, List.fill(k)(e)))
-    listResult.drop(0).foreach(e => println(e))
-    listResult
+    list.flatMap(e => List.fill(k)(e))
   }
   def rotate(list: List[Int], x: Int): List[Int] = ???
 
