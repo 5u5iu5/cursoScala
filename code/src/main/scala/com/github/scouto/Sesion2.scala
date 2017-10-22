@@ -48,10 +48,16 @@ object Sesion2 {
     }
   }
 
-  def penultimate(list: List[Int]): Option[Int] = ???
+  def penultimate(list: List[Int]): Option[Int] =
+    if (list.size >= 2) list.reverse.drop(list.head).headOption else Option.apply(0)
 
-  def duplicates(list: List[Int], k: Int): List[Int] = ???
 
+  def duplicates(list: List[Int], k: Int): List[Int] = {
+    val listResult = List(0)
+    list.foreach(e => listResult ::: List.fill(k)(e))
+    listResult.drop(0).foreach(e => println(e))
+    listResult
+  }
   def rotate(list: List[Int], x: Int): List[Int] = ???
 
   def isPalindrome(word: String): Boolean = ???
