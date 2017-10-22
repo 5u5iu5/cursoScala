@@ -11,19 +11,19 @@ object Sesion2 {
 
   def addToList(list: List[Int], elem: Int): List[Int] = list :+ elem
 
-  def isPalindrome(list: List[Int]) : Boolean = list == list.reverse
+  def isPalindrome(list: List[Int]): Boolean = list == list.reverse
 
 
-  val romanos = Map(1 -> "I", 2->"II", 3->"III", 4->"IV", 5->"V", 6->"VI", 7->"VII", 8->"VIII", 9->"IX", 10→"X")
+  val romanos = Map(1 -> "I", 2 -> "II", 3 -> "III", 4 -> "IV", 5 -> "V", 6 -> "VI", 7 -> "VII", 8 -> "VIII", 9 -> "IX", 10 → "X")
 
   def printMap(myMap: Map[Int, String]) = {
-    myMap.foreach{
+    myMap.foreach {
       case (k, v) => println(s"${k} => ${v}")
     }
   }
 
   def printSortedMap(myMap: Map[Int, String]) = {
-    myMap.toList.sortBy(_._1).foreach{
+    myMap.toList.sortBy(_._1).foreach {
       case (k, v) => println(s"${k} => ${v}")
     }
   }
@@ -34,12 +34,12 @@ object Sesion2 {
 
   def aplicaInteres2(cant: Option[Double], tipo: Option[Double]): Option[Double] = {
     (cant, tipo) match {
-      case (Some(c), Some(t)) => Some(c*t)
+      case (Some(c), Some(t)) => Some(c * t)
       case _ => None
     }
   }
 
-  def aplicaInteresEither(cant: Either[String, Double], tipo: Either[String, Double]): Either[String, Double] =  {
+  def aplicaInteresEither(cant: Either[String, Double], tipo: Either[String, Double]): Either[String, Double] = {
     (cant, tipo) match {
       case (Left(e1), Left(e2)) => Left(s"errores encontrados: [${e1}, ${e2}]")
       case (Left(e), _) => Left(e)
@@ -52,14 +52,18 @@ object Sesion2 {
     if (list.size >= 2) list.reverse.drop(list.head).headOption else Option.apply(0)
 
 
-  def duplicates(list: List[Int], k: Int): List[Int] = {
-    list.flatMap(e => List.fill(k)(e))
+  def duplicates(list: List[Int], k: Int): List[Int] = list.flatMap(e => List.fill(k)(e))
+
+  def rotate(list: List[Int], x: Int): List[Int] = {
+    val shift = x % list.size
+    if (shift == 0) list
+    else {
+      val count = if (shift > 0) shift else list.size + shift
+      list.drop(count) ::: list.take(count)
+    }
   }
-  def rotate(list: List[Int], x: Int): List[Int] = ???
 
   def isPalindrome(word: String): Boolean = ???
-
-
 
 
 }

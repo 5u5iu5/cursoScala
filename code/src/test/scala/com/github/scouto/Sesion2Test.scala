@@ -42,4 +42,9 @@ class Sesion2Test extends FlatSpec with Matchers with PropertyChecks{
     resultList(2) shouldEqual (2)
     resultList(3) shouldEqual (2)
   }
+
+  "rotate" should "return a list with elem rotate n positions" in {
+    //1,2,3,4,5 should be
+    rotate(list, 2) shouldEqual (Option(4))
+  }
 }
