@@ -1,5 +1,11 @@
 package com.github.scouto
 
+import org.scalacheck.Gen
+import org.scalatest.prop.PropertyChecks
+import org.scalatest.{FlatSpec, Matchers}
+
+import com.github.scouto.Sesion2._
+
 /**
   * Created by scouto.
   */
@@ -7,7 +13,7 @@ package com.github.scouto
 class Sesion2Test extends FlatSpec with Matchers with PropertyChecks{
 
   val genPositiveInteger = for (n <- Gen.choose(-500, 500)) yield n
-
+  val list = List.range(1,6)
 
 
   "sum" should "work with both natural numbers" in {

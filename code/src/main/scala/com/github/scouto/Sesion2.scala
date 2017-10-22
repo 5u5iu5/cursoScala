@@ -54,7 +54,7 @@ object Sesion2 {
 
   def duplicates(list: List[Int], k: Int): List[Int] = {
     val listResult = List(0)
-    list.foreach(e => listResult ::: List.fill(k)(e))
+    list.foreach(e => List.concat(listResult, List.fill(k)(e)))
     listResult.drop(0).foreach(e => println(e))
     listResult
   }
