@@ -56,17 +56,14 @@ object Sesion2 {
 
   def rotate(list: List[Int], x: Int): List[Int] = {
     val controlPosition = x % list.size
-    if (controlPosition == 0) list
-    else {
-      val count =
-        if (controlPosition > 0)
-          controlPosition
-        else list.size + controlPosition
-      list.drop(count) ::: list.take(count)
+    controlPosition match {
+      case 0 => list
+      case d if (d > 0) => list.drop(d) ::: list.take(d)
+      case e if (e < 0) => list.drop(list.size + e) ::: list.take(list.size + e)
     }
   }
 
-  def isPalindrome(word: String): Boolean = word.toList.reverse.mkString equals( word)
+  def isPalindrome(word: String): Boolean = word.reverse.mkString equals( word)
 
 
 }

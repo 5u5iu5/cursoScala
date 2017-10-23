@@ -25,7 +25,7 @@ class IntroTest extends FlatSpec with Matchers {
   }
 
   "second" should "return second element from list" in {
-    second(1 :: 5 :: 9 :: 2 :: 1 :: Nil) shouldBe(5)
-    second(1 :: Nil) shouldBe(0)
+    second(1 :: 5 :: 9 :: 2 :: 1 :: Nil) shouldBe(Some(5))
+    second(1 :: Nil) shouldBe(None)
   }
 }
