@@ -1,5 +1,7 @@
 package com.github.scouto
 
+import scala.annotation.tailrec
+
 /**
   * Created by scouto.
   */
@@ -45,6 +47,7 @@ object MyApp extends App {
 
   def operate[A, B](x: A, y: A)(f: (A, A) => B) = f(x, y)
 
+  // To do with recursive method
   def max(list: List[Int]): Int = {
     var numMax = 0
 
@@ -63,9 +66,20 @@ object MyApp extends App {
     findHigherNum(list, 0)
   }
 
-  def second(list: List[Int]): Int = ???
+  def second(list: List[Int]): Option[Int] = {
+    list match {
+      case h::h2::t => Some(h2)
+      case _ => None
+    }
+  }
 
-  def nth(list: List[Int], n: Int): Int = ???
+  def nth(list: List[Int], n: Int): Option[Int] = {
+    list match {
+      case h::t if n == 0 => Some(h)
+      case h::t if n > 0 => nth(t, n-1)
+      case _ => None
+    }
+  }
 
 
 }
