@@ -20,4 +20,8 @@ class IntroTest extends FlatSpec with Matchers {
     factorial(-1) should be (1)
   }
 
+  "max" should "return max number from a list" in {
+    max(1 :: 5 :: 9 :: 2 :: 1 :: Nil) shouldBe(9)
+  }
+
 }
