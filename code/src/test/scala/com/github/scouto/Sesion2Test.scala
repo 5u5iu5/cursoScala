@@ -51,4 +51,13 @@ class Sesion2Test extends FlatSpec with Matchers with PropertyChecks{
     result(2) shouldEqual(5)
 
   }
+
+  "palindrome" should "return true or false if word is palindrome" in {
+    //Ababa, Abalaba, aibofobia, Ana, ala, arenera, arepera, anilina, ananá, aviva ,Malayalam, Menem, Neuquén, oro, Oruro, oso, ojo, radar, reconocer, rotor, salas, seres, somos, sometemos.
+    isPalindrome("ababa") shouldBe (true)
+    isPalindrome("arenera") shouldBe(true)
+    isPalindrome("Alvaro") shouldBe(false)
+
+
+  }
 }

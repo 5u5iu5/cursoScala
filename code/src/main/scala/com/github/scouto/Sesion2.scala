@@ -66,7 +66,7 @@ object Sesion2 {
     }
   }
 
-  def isPalindrome(word: String): Boolean = ???
+  def isPalindrome(word: String): Boolean = word.toList.reverse.mkString equals( word)
 
 
 }
