@@ -55,10 +55,13 @@ object Sesion2 {
   def duplicates(list: List[Int], k: Int): List[Int] = list.flatMap(e => List.fill(k)(e))
 
   def rotate(list: List[Int], x: Int): List[Int] = {
-    val shift = x % list.size
-    if (shift == 0) list
+    val controlPosition = x % list.size
+    if (controlPosition == 0) list
     else {
-      val count = if (shift > 0) shift else list.size + shift
+      val count =
+        if (controlPosition > 0)
+          controlPosition
+        else list.size + controlPosition
       list.drop(count) ::: list.take(count)
     }
   }
