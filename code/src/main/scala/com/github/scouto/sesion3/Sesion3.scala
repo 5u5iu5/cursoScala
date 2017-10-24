@@ -27,20 +27,12 @@ object Sesion3 extends App {
   def curryGeneric[A, B, C](f: (A, B) => C): A => B => C =
     a => b => f(a, b)
 
-  def composicion[A,B,C](f: A => B, g: A => C): A => B = {
+  def composicion[A, B](f: A => B, g: A => A): A => B = {
     a => f(g(a))
   }
 }
 
-class Person(private val _name: String, private var _age: Int = 0) {
 
-  def name = _name
-
-  def age = _age
-
-  def age_(newAge: Int) = _age = newAge
-
-}
 
 
 

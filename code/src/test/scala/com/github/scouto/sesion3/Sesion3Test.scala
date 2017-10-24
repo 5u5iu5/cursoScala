@@ -7,14 +7,14 @@ import org.scalatest.{FlatSpec, Matchers}
   */
 class Sesion3Test extends FlatSpec with Matchers{
   val manjarin = new Alumno("Javier", "Manjarin")
-  val claudio  = new Alumno(nombre = "Claudio", apellidos = "Barragan")
-  val alfredo   = new Alumno(apellidos = "Santaelena", nombre = "Alfredo")
+  val claudio  = new Alumno(_nombre = "Claudio", _apellidos = "Barragan")
+  val alfredo   = new Alumno(_apellidos = "Santaelena", _nombre = "Alfredo")
   val fran  = new Alumno("Fran", "González")
 
   val asignatura = new Asignatura(
     nombre = "curso scala",
-    descripcion = Some("Curso impartido en Amaris"),
-    plazas = 3)
+    descripcion = "Curso impartido en Amaris"
+    ,limiteAlumnos = 3)
 
   "Administracion" should "permitir inscribirse si hay plazas" in {
     val adm = new Administracion(Map(asignatura -> List(manjarin, claudio)))
