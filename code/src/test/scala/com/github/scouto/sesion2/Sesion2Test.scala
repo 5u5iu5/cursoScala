@@ -1,10 +1,9 @@
-package com.github.scouto
+package com.github.scouto.sesion2
 
+import com.github.scouto.sesion2.Sesion2._
 import org.scalacheck.Gen
 import org.scalatest.prop.PropertyChecks
 import org.scalatest.{FlatSpec, Matchers}
-
-import com.github.scouto.Sesion2._
 
 /**
   * Created by scouto.
