@@ -1,4 +1,12 @@
-package com.github.scouto.sesion3
+package com.github.scouto.sesion4
+
+object Administracion{
+  def apply(relacionAlumnos: Map[Asignatura, List[Alumno]] = Map()): Administracion =
+    new Administracion(relacionAlumnos)
+
+  def unapply(arg: Administracion): Option[(Map[Asignatura, List[Alumno]])] =
+    Some(arg.relacionAlumnos)
+}
 
 /**
   * Created by scouto.

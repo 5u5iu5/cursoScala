@@ -28,8 +28,9 @@ object Sesion3 extends App {
     a => b => f(a, b)
 
   def composicion[A, B](f: A => B, g: A => A): A => B = {
-    a => f (g(a))
+    a => f(g(a))
   }
+
 }
 
 
