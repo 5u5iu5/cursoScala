@@ -6,6 +6,6 @@ def composicionB(f: Int => String): Int => String = {
   a => f(a)
 }
 
-composicionB(3 => "3")
+val list = List.range(1, 500).map(l => "Kafka - " + l )
 
 def toString(num: Int) = num.toString

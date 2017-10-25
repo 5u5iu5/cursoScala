@@ -32,10 +32,12 @@ class Administracion(val relacionAlumnos: Map[Asignatura, List[Alumno]] = Map())
     * @return
     */
   def baja(alumno: Alumno, asignatura: Asignatura): Either[String, Administracion] =
-    relacionAlumnos.getOrElse(asignatura, List()) match {
+    relacionAlumnos.getOrElse(asignatura, List(alumno)) match {
       case Nil => new Left("No existe la asignatura")
       case alumnos if alumnos.nonEmpty =>
-        new Right(new Administracion(relacionAlumnos + (asignatura -> alumnos.filterNot(p => p == alumno))))
+        if (alumnos.filter(a => a == alumno).nonEmpty)
+          new Right(new Administracion(relacionAlumnos + (asignatura -> alumnos.filterNot(p => p == alumno))))
+        else new Left("Alumno no inscrito")
       case _ => new Left("Error")
     }
 
