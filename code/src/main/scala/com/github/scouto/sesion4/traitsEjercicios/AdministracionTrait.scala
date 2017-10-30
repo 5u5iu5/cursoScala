@@ -3,7 +3,8 @@ package com.github.scouto.sesion4.traitsEjercicios
 import com.github.scouto.sesion4.traitsEjercicios.alumno.{AlumnoNuevo, AlumnoTrait}
 import com.github.scouto.sesion4.traitsEjercicios.asignatura.{AsignaturaConPrioridad, AsignaturaTrait}
 
-case class AdministracionTrait[asignatura <: AsignaturaTrait, alumno <: AlumnoTrait](relacionAlumnos: Map[asignatura, List[alumno]] = Map()) {
+case class AdministracionTrait[asignatura <: AsignaturaTrait, alumno <: AlumnoTrait]
+(relacionAlumnos: Map[asignatura, List[alumno]] = Map()) {
 
   def removeFirstElement(list: List[alumno], f: AlumnoTrait => Boolean): List[alumno] = {
 
@@ -12,26 +13,26 @@ case class AdministracionTrait[asignatura <: AsignaturaTrait, alumno <: AlumnoTr
 
       rest match {
         case Nil => acc
-        case h::t if f(h) => acc:::t
-        case h::t if !f(h) => go(acc :+ h, t)
+        case h :: t if f(h) => acc ::: t
+        case h :: t if !f(h) => go(acc :+ h, t)
       }
     }
 
-    go (List(), list)
+    go(List(), list)
   }
 
   def alta(alumno: alumno, asignatura: asignatura): Option[AdministracionTrait[asignatura, alumno]] = {
 
-    def altaConPrioridad(alumno: alumno, asignatura: asignatura):  Option[AdministracionTrait[asignatura, alumno]] = {
+    def altaConPrioridad(alumno: alumno, asignatura: asignatura): Option[AdministracionTrait[asignatura, alumno]] = {
 
-        relacionAlumnos.getOrElse(asignatura, List()) match {
+      relacionAlumnos.getOrElse(asignatura, List()) match {
         case Nil => Some(AdministracionTrait(relacionAlumnos + (asignatura -> List(alumno))))
         case l if l.contains(alumno) => None
         case l if l.size < asignatura.plazas
-                => Some(AdministracionTrait(relacionAlumnos + (asignatura -> (alumno :: l))))
+        => Some(AdministracionTrait(relacionAlumnos + (asignatura -> (alumno :: l))))
         case l if l.size == asignatura.plazas
           && l.exists(_.isRepetidor)
-                => Some(AdministracionTrait(relacionAlumnos + (asignatura -> (alumno :: removeFirstElement(l, a => a.isRepetidor)))))
+        => Some(AdministracionTrait(relacionAlumnos + (asignatura -> (alumno :: removeFirstElement(l, a => a.isRepetidor)))))
 
         case _ => None
       }
@@ -39,7 +40,7 @@ case class AdministracionTrait[asignatura <: AsignaturaTrait, alumno <: AlumnoTr
 
 
     def altaSinPrioridad(alumno: alumno, asignatura: asignatura): Option[AdministracionTrait[asignatura, alumno]] = {
-        relacionAlumnos.getOrElse(asignatura, List()) match {
+      relacionAlumnos.getOrElse(asignatura, List()) match {
         case Nil => Some(AdministracionTrait(relacionAlumnos + (asignatura -> List(alumno))))
         case l if l.contains(alumno) => None
         case l if l.size < asignatura.plazas => Some(AdministracionTrait(relacionAlumnos + (asignatura -> (alumno :: l))))
