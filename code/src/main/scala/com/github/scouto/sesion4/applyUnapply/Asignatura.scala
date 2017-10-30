@@ -1,4 +1,4 @@
-package com.github.scouto.sesion4
+package com.github.scouto.sesion4.applyUnapply
 
 object Asignatura {
   def apply(nombre: String, limiteAlumnos: Int = 30, descripcion: String): Asignatura = new Asignatura(

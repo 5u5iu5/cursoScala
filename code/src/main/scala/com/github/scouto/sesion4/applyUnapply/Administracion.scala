@@ -1,4 +1,4 @@
-package com.github.scouto.sesion4
+package com.github.scouto.sesion4.applyUnapply
 
 object Administracion{
   def apply(relacionAlumnos: Map[Asignatura, List[Alumno]] = Map()): Administracion =

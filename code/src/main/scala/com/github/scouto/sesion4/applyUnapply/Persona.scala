@@ -1,4 +1,4 @@
-package com.github.scouto.sesion4
+package com.github.scouto.sesion4.applyUnapply
 
 object Persona {
   def apply(nombre: String, apellidos: String, edad: Int): Persona = new Persona(
