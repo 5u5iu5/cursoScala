@@ -22,6 +22,17 @@ class ListaTest extends FlatSpec with Matchers with PropertyChecks{
     sum(Lista(16, -20)) should be (-4)
   }
 
+  "init" should "return a list minos the last element" in {
+    init(Lista(1,2,3,4)) should be (Lista(1,2,3))
+  }
+
+  "product" should "return the proper value" in {
+    product(Lista(1,2)) should be (2)
+    product(Lista()) should be (1)
+    product(Lista(-1,2)) should be (-2)
+    product(Lista(16)) should be (16)
+    product(Lista(5, 5)) should be (25)
+  }
 
   }
 

@@ -9,7 +9,7 @@ sealed trait Lista[+A]
 
 case object Vacio extends Lista[Nothing]
 
-case class Cons[+A](head: A, tail: Lista[A]) extends Lista[A]
+case class Cons[A](head: A, tail: Lista[A]) extends Lista[A]
 
 
 object Lista {
