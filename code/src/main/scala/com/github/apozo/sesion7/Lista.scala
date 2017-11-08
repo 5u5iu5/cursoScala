@@ -176,19 +176,61 @@ object Lista {
 
   // -------------------- Sesion 7 --------------------
 
-  def addOne(l: Lista[Int]): Lista[Int] = ???
+  def addOne(l: Lista[Int]): Lista[Int] = {
+    foldRight(l, Vacio: Lista[Int])((elem, acc) => Cons(elem + 1, acc))
+  }
 
-  def doubleToString(l: Lista[Double]): Lista[String] = ???
+  def doubleToString(l: Lista[Double]): Lista[String] = {
+    foldRight(l, Vacio: Lista[String])((elem, acc) => Cons(elem.toString, acc))
+  }
 
-  def map[A, B](l: Lista[A])(f: A => B): Lista[B] = ???
+  def map[A, B](l: Lista[A])(f: A => B): Lista[B] = {
+    foldRight(l, Vacio: Lista[B])((elem, acc) => Cons(f(elem), acc))
+  }
 
-  def filter[A](l: Lista[A])(f: A => Boolean): Lista[A] = ???
+  def filter[A](l: Lista[A])(f: A => Boolean): Lista[A] = {
+    foldRight(l, Vacio: Lista[A])((elem, acc) => if (f(elem)) Cons(elem, acc) else acc)
+  }
 
-  def flatMap[A, B](l: Lista[A])(f: A => Lista[B]): Lista[B] = ???
+  def flatMap[A, B](l: Lista[A])(f: A => Lista[B]): Lista[B] = {
+    appendLists(map(l)(f))
+  }
 
-  def filterFlatMap[A](l: Lista[A])(f: A => Boolean): Lista[A] = ???
+  def filterFlatMap[A](l: Lista[A])(f: A => Boolean): Lista[A] = {
+    flatMap(l)(x => if (f(x)) Lista(x) else Vacio)
+  }
 
   def tieneSubsecuencia[A](lista: Lista[A], sub: Lista[A]): Boolean = ???
+
+  def addLists(l1: Lista[Int], l2: Lista[Int]): Lista[Int] = {
+    @tailrec
+    def go(l1: Lista[Int], l2: Lista[Int], res: Lista[Int]): Lista[Int] = {
+      (l1, l2) match {
+        case (Vacio, Vacio) => res
+        case (_, Vacio) => Vacio
+        case (Vacio, _) => Vacio
+        case (Cons(h, t), Cons(h2, t2)) => go(t, t2, append(res, Lista(h+h2)))
+      }
+    }
+
+    go(l1, l2, Vacio)
+  }
+
+  def zipWith[A, B, C](l1: Lista[A], l2: Lista[B])(f: (A, B) => C): Lista[C] = {
+
+    @tailrec
+    def go(l1: Lista[A], l2: Lista[B], res: Lista[C]): Lista[C] ={
+      (l1, l2) match {
+        case (Vacio, Vacio) => res
+        case (_, Vacio) => Vacio
+        case (Vacio, _) => Vacio
+        case (Cons(h, t), Cons(h2, t2)) => go(t, t2, append(res, Lista(f(h,h2))))
+      }
+    }
+
+    go(l1, l2, Vacio)
+
+  }
 
 }
 
