@@ -200,8 +200,6 @@ object Lista {
     flatMap(l)(x => if (f(x)) Lista(x) else Vacio)
   }
 
-  def tieneSubsecuencia[A](lista: Lista[A], sub: Lista[A]): Boolean = ???
-
   def addLists(l1: Lista[Int], l2: Lista[Int]): Lista[Int] = {
     @tailrec
     def go(l1: Lista[Int], l2: Lista[Int], res: Lista[Int]): Lista[Int] = {
@@ -209,7 +207,7 @@ object Lista {
         case (Vacio, Vacio) => res
         case (_, Vacio) => Vacio
         case (Vacio, _) => Vacio
-        case (Cons(h, t), Cons(h2, t2)) => go(t, t2, append(res, Lista(h+h2)))
+        case (Cons(h, t), Cons(h2, t2)) => go(t, t2, append(res, Lista(h + h2)))
       }
     }
 
@@ -219,17 +217,40 @@ object Lista {
   def zipWith[A, B, C](l1: Lista[A], l2: Lista[B])(f: (A, B) => C): Lista[C] = {
 
     @tailrec
-    def go(l1: Lista[A], l2: Lista[B], res: Lista[C]): Lista[C] ={
+    def go(l1: Lista[A], l2: Lista[B], res: Lista[C]): Lista[C] = {
       (l1, l2) match {
         case (Vacio, Vacio) => res
         case (_, Vacio) => Vacio
         case (Vacio, _) => Vacio
-        case (Cons(h, t), Cons(h2, t2)) => go(t, t2, append(res, Lista(f(h,h2))))
+        case (Cons(h, t), Cons(h2, t2)) => go(t, t2, append(res, Lista(f(h, h2))))
       }
     }
 
     go(l1, l2, Vacio)
 
+  }
+
+  @tailrec
+  def tieneSubsecuencia[A](lista: Lista[A], sub: Lista[A]): Boolean = {
+    //    (lista, sub) match {
+    //      case (Vacio, _) => false
+    //      case (Cons(h1, _), Cons(h2, _)) if h1 == h2 => true
+    //      case (Cons(h1, t1), Cons(h2, t2)) if h1 != h2 => tieneSubsecuencia(t1, t2)
+    //    }
+    lista match {
+      case Vacio => sub == Vacio
+      case _ if empiezaPor(lista, sub) => true
+      case Cons(h1, t1) => tieneSubsecuencia(t1, sub)
+    }
+  }
+
+  @tailrec
+  def empiezaPor[A](lista: Lista[A], sub: Lista[A]): Boolean = {
+    (lista, sub) match {
+      case (_, Vacio) => true
+      case (Cons(h1, t1), Cons(h2, t2)) if (h1 == h2) => empiezaPor(t1, t2)
+      case _ => false
+    }
   }
 
 }

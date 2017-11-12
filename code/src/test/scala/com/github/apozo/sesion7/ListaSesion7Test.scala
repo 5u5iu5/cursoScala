@@ -8,8 +8,7 @@ import org.scalatest.{FlatSpec, Matchers}
 /**
   * Created by scouto.
   */
-class ListaSesion7Test extends FlatSpec with Matchers with PropertyChecks{
-
+class ListaSesion7Test extends FlatSpec with Matchers with PropertyChecks {
 
 
   "addOne" should "be empty for empty lists" in {
@@ -57,7 +56,7 @@ class ListaSesion7Test extends FlatSpec with Matchers with PropertyChecks{
   }
 
   "flatMap" should "be empty for empty lists" in {
-    val l:Lista[Int] = Vacio
+    val l: Lista[Int] = Vacio
     assert(flatMap(l)(a => Lista(a, a)) == Vacio)
   }
 
@@ -83,10 +82,38 @@ class ListaSesion7Test extends FlatSpec with Matchers with PropertyChecks{
   "zipWith" should "do this" in {
     val l1 = Lista(1, 3, 6, 7, 10)
     val l2 = Lista(1, 2, 3, 4, 5)
-    assert(addLists(l1, l2) == zipWith(l1, l2)((a, b) => a+b))
+    val l3 = Lista(1, 2, 3)
+
+    assert(addLists(l1, l2) == zipWith(l1, l2)((a, b) => a + b))
     assert(Lista(0, 1, 3, 3, 5) == zipWith(l1, l2)((a, b) => a - b))
-  }
+    assert(zipWith(l1, l3)((a, b) => a - b) == Vacio)
 
   }
+
+  "startWith" should "do this" in {
+    val l1 = Lista(1, 2, 3, 4)
+    assert(empiezaPor(l1, Lista(1)))
+    assert(empiezaPor(l1, Lista(1, 2)))
+    assert(!empiezaPor(l1, Lista(2)))
+    assert(!empiezaPor(l1, Lista(2, 3)))
+    assert(!empiezaPor(l1, Lista(4)))
+    assert(empiezaPor(l1, Vacio))
+    assert(empiezaPor(Vacio, Vacio))
+    assert(!empiezaPor(Vacio, Lista(1)))
+  }
+
+  "hasSubsequence" should "do this" in {
+    val l1 = Lista(1, 2, 3, 4)
+    assert(tieneSubsecuencia(l1, Lista(1)))
+    assert(tieneSubsecuencia(l1, Lista(1, 2)))
+    assert(tieneSubsecuencia(l1, Lista(2)))
+    assert(tieneSubsecuencia(l1, Lista(2, 3)))
+    assert(tieneSubsecuencia(l1, Lista(4)))
+    assert(tieneSubsecuencia(l1, Vacio))
+    assert(tieneSubsecuencia(Vacio, Vacio))
+    assert(!tieneSubsecuencia(Vacio, Lista(1)))
+  }
+
+}
 
 
