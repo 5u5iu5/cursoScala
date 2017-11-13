@@ -51,11 +51,16 @@ object Arbol {
     fold(t)(_ => 1)(1 + _ + _)
 
 
-  def maximumFold(t: Arbol[Int]): Int = ???
+  def maximumFold(t: Arbol[Int]): Int =
+    fold(t)(a => a)((l, r) => l max r)
 
-  def depthFold[A](t: Arbol[A]): Int = ???
 
-  def mapFold[A, B](t: Arbol[A])(f: A => B): Arbol[B] = ???
+  def depthFold[A](t: Arbol[A]): Int =
+    fold(t)(a => 1)((d1, d2) => 1 + (d1 max d2))
+
+
+  def mapFold[A, B](t: Arbol[A])(f: A => B): Arbol[B] =
+    fold(t)(a => Hoja(f(a)): Arbol[B])((l, r) => Rama(l ,r))
 }
 
 

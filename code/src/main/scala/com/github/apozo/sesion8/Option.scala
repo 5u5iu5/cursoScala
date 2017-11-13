@@ -24,7 +24,9 @@ case object None extends Option[Nothing]
 object Option {
 
 
-  def mean(xs:Seq[Double]): Option[Double] = ???
+  def mean(xs:Seq[Double]): Option[Double] =
+    if (xs.isEmpty) None
+    else Some(xs.sum / xs.length)
 
   def calcularCuota(age: Int, incidencias: Int): Double = ???
 

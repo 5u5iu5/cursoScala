@@ -44,7 +44,7 @@ class ArbolTest extends FlatSpec with Matchers with PropertyChecks {
 
   "sizefold" should "work the same as size" in {
     assert(sizeFold(leaf) == Arbol.size(leaf))
-    assert(sizeFold(tree) == Arbol.size(leaf))
+    assert(sizeFold(tree) == Arbol.size(tree))
 
   }
 
