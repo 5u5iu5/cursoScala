@@ -27,12 +27,12 @@ object Sesion8 extends App{
     if x % 2 == 0
   } yield x + 1
 
-  println("filteredMapped: " + filtered)
+  println("filteredMapped: " + filteredMapped)
 
 
+  val flatMappedOriginal = xs.flatMap(x => ys.map(y => (x, y)))
 
-
-  xs.flatMap(x => ys.map(y => (x, y)))
+  println("flatMappedOriginal: " + flatMappedOriginal)
 
   val flatMapped = for {
     x <- xs

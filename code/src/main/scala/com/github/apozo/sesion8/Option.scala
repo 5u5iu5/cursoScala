@@ -5,39 +5,94 @@ package com.github.apozo.sesion8
   */
 sealed trait Option[+A] {
 
-  def map[B] (f: A => B): Option[B] = ???
+  def map[B](f: A => B): Option[B] = {
+    this match {
+      case None => None
+      case Some(algo) => Some(f(algo))
+    }
+  }
 
-  def flatMap[B](f: A => Option[B]) : Option[B] = ???
+  def flatMap[B](f: A => Option[B]): Option[B] = {
+    map(f).getOrElse(None)
+  }
 
-  def getOrElse[B >: A] (default: => B): B = ???
+  def getOrElse[B >: A](default: => B): B = {
+    this match {
+      case None => default
+      case Some(algo) => algo
+    }
+  }
 
   //devuelve el valor del Option si existe, en caso contrario devuelve el parámetro recibido
-  def orElse[B >: A] (ob: => Option[B]): Option[B] = ???
+  def orElse[B >: A](ob: => Option[B]): Option[B] = {
+    map(Some(_)) getOrElse (ob)
+    /*this match {
+      case None => ob
+      case  _ => this
+    }*/
+  }
 
-  def filter(f: A => Boolean): Option[A] = ???
+  def filter(f: A => Boolean): Option[A] = {
+    flatMap(criteria => if (f(criteria)) Some(criteria) else None)
+    /*this match {
+      case Some(a) if f(a) => this
+      case _ => None
+    }*/
+  }
 }
-case class Some[+A](get: A) extends Option[A]
-case object None extends Option[Nothing]
 
+case class Some[+A](get: A) extends Option[A]
+
+case object None extends Option[Nothing]
 
 
 object Option {
 
 
-  def mean(xs:Seq[Double]): Option[Double] =
+  def mean(xs: Seq[Double]): Option[Double] =
     if (xs.isEmpty) None
     else Some(xs.sum / xs.length)
 
   def calcularCuota(age: Int, incidencias: Int): Double = ???
 
-  def map2[A, B, C](a: Option[A], b: Option[B])(f: (A, B) => C): Option[C] = ???
+  // Lifting a la brava
+  def calcularCuotaString(age: String, incidencias: String): Option[Double] = {
+    val myAge = try {
+      age.toInt
+    } catch {
+      case e: Exception => return None
+    }
 
-  def sequence[A](a: List[Option[A]]): Option[List[A]] = ???
+    val myIncidencia = try {
+      incidencias.toInt
+    } catch {
+      case e: Exception => return None
+    }
 
-  def traverse[A, B](a: List[A])(f: A => Option[B]): Option[List[B]] = ???
+    Some(calcularCuota(myAge, myIncidencia))
+  }
 
-  def sequenceViaTraverse[A](a: List[Option[A]]): Option[List[A]] = ???
+  def map2[A, B, C] (a: Option[A], b: Option[B] ) (f: (A, B) => C): Option[C] = {
+    a flatMap (aprima => b.map((bprima => f(aprima, bprima))))
 
-  def variance(xs: Seq[Double]): Option[Double] = ???
+    /*(a, b) match {
+      case (None, _) => None
+      case (_, None) => None
+      case (Some(a), Some(b)) => Some(f(a,b))
+    }*/
+
+    /*for {
+      aprima <- a
+      bprima <- b
+    } yield f(aprima, bprima)*/
+  }
+
+  def sequence[A] (a: List[Option[A]] ): Option[List[A]] = ???
+
+  def traverse[A, B] (a: List[A] ) (f: A => Option[B] ): Option[List[B]] = ???
+
+  def sequenceViaTraverse[A] (a: List[Option[A]] ): Option[List[A]] = ???
+
+  def variance (xs: Seq[Double] ): Option[Double] = ???
 
 }
