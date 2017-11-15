@@ -72,7 +72,7 @@ object Option {
     Some(calcularCuota(myAge, myIncidencia))
   }
 
-  def map2[A, B, C] (a: Option[A], b: Option[B] ) (f: (A, B) => C): Option[C] = {
+  def map2[A, B, C](a: Option[A], b: Option[B])(f: (A, B) => C): Option[C] = {
     a flatMap (aprima => b.map((bprima => f(aprima, bprima))))
 
     /*(a, b) match {
@@ -87,12 +87,12 @@ object Option {
     } yield f(aprima, bprima)*/
   }
 
-  def sequence[A] (a: List[Option[A]] ): Option[List[A]] = ???
+  def sequence[A](a: List[Option[A]]): Option[List[A]] = ???
 
-  def traverse[A, B] (a: List[A] ) (f: A => Option[B] ): Option[List[B]] = ???
+  def traverse[A, B](a: List[A])(f: A => Option[B]): Option[List[B]] = ???
 
-  def sequenceViaTraverse[A] (a: List[Option[A]] ): Option[List[A]] = ???
+  def sequenceViaTraverse[A](a: List[Option[A]]): Option[List[A]] = ???
 
-  def variance (xs: Seq[Double] ): Option[Double] = ???
+  def variance(xs: Seq[Double]): Option[Double] = ???
 
 }
