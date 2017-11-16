@@ -87,12 +87,15 @@ object Option {
     } yield f(aprima, bprima)*/
   }
 
-  def sequence[A](a: List[Option[A]]): Option[List[A]] = ???
+  def sequence[A](a: List[Option[A]]): Option[List[A]] =
+      a.foldRight(Some(Nil):Option[List[A]])((e, acc) => map2(e, acc)((e, acc) => e::acc))
 
-  def traverse[A, B](a: List[A])(f: A => Option[B]): Option[List[B]] = ???
+  def traverse[A, B](a: List[A])(f: A => Option[B]): Option[List[B]] =
+    a.foldRight(Some(Nil): Option[List[B]])((e, acc) => map2(f(e), acc)((e, acc) => e::acc))
 
-  def sequenceViaTraverse[A](a: List[Option[A]]): Option[List[A]] = ???
 
-  def variance(xs: Seq[Double]): Option[Double] = ???
+  def sequenceViaTraverse[A](a: List[Option[A]]): Option[List[A]] = traverse(a)(x => x)
+
+  def variance(xs: Seq[Double]): Option[Double] = mean(xs) flatMap (m => mean(xs.map(x => math.pow(x - m, 2))))
 
 }
