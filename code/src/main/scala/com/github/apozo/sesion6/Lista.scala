@@ -1,5 +1,7 @@
 package com.github.apozo.sesion6
 
+import com.github.apozo.sesion5.Lista
+
 import scala.annotation.tailrec
 
 sealed trait Lista[+A]

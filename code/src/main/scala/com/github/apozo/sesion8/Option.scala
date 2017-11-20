@@ -1,5 +1,9 @@
 package com.github.apozo.sesion8
 
+import com.github.apozo.sesion8.None
+import com.github.apozo.sesion8.Some
+
+
 /**
   * Created by couto
   */

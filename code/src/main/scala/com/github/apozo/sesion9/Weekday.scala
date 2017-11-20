@@ -1,5 +1,7 @@
 package com.github.apozo.sesion9
 
+import com.github.apozo.sesion9.Weekday
+
 /**
   * Created by scouto.
   */

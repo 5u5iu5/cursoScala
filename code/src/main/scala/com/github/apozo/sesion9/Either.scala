@@ -1,6 +1,7 @@
 package com.github.apozo.sesion9
 
 import scala.util.{Failure, Success, Try}
+import com.github.apozo.sesion9._
 
 /**
   * Created by couto on 30/06/17.
