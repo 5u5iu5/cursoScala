@@ -23,4 +23,8 @@ object Sesion10 extends App{
   //duplicateNonStrict(10+11)
   //duplicateNonStrict(sys.error("failure"))
 
+  def myIf[A](cond: Boolean, onTrue: => A, onFalse: => A): A = {
+    if (cond) onTrue else onFalse
+  }
+
 }
