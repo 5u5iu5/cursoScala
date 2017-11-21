@@ -2,6 +2,8 @@ package com.github.apozo.sesion10
 
 import com.github.apozo.sesion10.Stream._
 
+import scala.annotation.tailrec
+
 /**
   * Created by couto.
   */
@@ -21,7 +23,7 @@ sealed trait Stream[+A] {
     }
   }
 
-  //  @tailrec
+  @tailrec
   final def drop(n: Int): Stream[A] = {
     this match {
       case Cons(_, t) if n > 0 => t().drop(n - 1)
