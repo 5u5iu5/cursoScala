@@ -19,7 +19,7 @@ sealed trait Stream[+A] {
   def toList: List[A] = {
     this match {
       case Empty => Nil
-      case Cons(h,t) => h() :: t().toList
+      case Cons(h, t) => h() :: t().toList
     }
   }
 
@@ -64,7 +64,7 @@ sealed trait Stream[+A] {
   def take(n: Int): Stream[A] = {
     this match {
       //case Cons(h, t) if n > 1 => Cons(() => h(), () => t().take(n - 1))
-      case Cons(h, t) if n > 1 => cons( h(), t().take(n - 1))
+      case Cons(h, t) if n > 1 => cons(h(), t().take(n - 1))
       case Cons(h, _) if n == 1 => Stream(h())
       case _ => empty
     }
@@ -78,37 +78,73 @@ sealed trait Stream[+A] {
   }
 
   //true si algun elemento cumple
-  def exists(f: A => Boolean): Boolean = ???
+  def exists(f: A => Boolean): Boolean = {
+    this match {
+      case Cons(h, t) => (f(h())) || t().exists(f)
+      case _ => false
+    }
+  }
 
   //Sesion 11
-  def foldRight[B](z: => B)(f: (A, => B) => B): B = ???
+  def foldRight[B](z: => B)(f: (A, => B) => B): B = {
+    this match {
+      case Cons(h, t) => f(h(), t().foldRight(z)(f))
+      case _ => z
+    }
+  }
 
-  //  @tailrec
-  final def foldLeft[B](z: => B)(f: ( => B, A) => B): B = ???
+  @tailrec
+  final def foldLeft[B](z: => B)(f: (=> B, A) => B): B = {
+    this match {
+      case Cons(h, t) => t().foldLeft(f(z, h()))(f)
+      case _ => z
+    }
+  }
 
-  def existsFoldRight(f: A => Boolean): Boolean = ???
+  def existsFoldRight(f: A => Boolean): Boolean = {
+    foldRight(false)((elem, acc) => f(elem) || acc)
+  }
 
-  def existsFoldLeft(f: A => Boolean): Boolean = ???
+  def existsFoldLeft(f: A => Boolean): Boolean = {
+    foldLeft(false)((acc, elem) => f(elem) || acc)
+  }
 
-  def forAll(p: A => Boolean): Boolean = ???
+  def forAll(p: A => Boolean): Boolean = {
+    foldRight(true)((elem, acc) => p(elem) && acc)
+  }
 
-  def headOptionFold: Option[A] = ???
+  def headOptionFold: Option[A] = {
+    foldRight(None: Option[A])((elem, acc) => Some(elem))
+  }
 
-  def takeWhileFold(p: A => Boolean): Stream[A] = ???
+  def takeWhileFold(p: A => Boolean): Stream[A] = {
+    foldRight(empty[A])((elem, acc) => if (p(elem)) cons(elem, acc) else empty)
+  }
 
-  def map[B](f: A => B): Stream[B] = ???
+  def map[B](f: A => B): Stream[B] = {
+    foldRight(empty[B])((elem, acc) => cons(f(elem), acc))
+  }
 
-  def filter(p: A => Boolean): Stream[A] = ???
+  def filter(p: A => Boolean): Stream[A] = {
+    foldRight(empty[A])((elem, acc) => if (p(elem)) cons(elem, acc) else acc)
+  }
 
+  def append[B >: A](other: => Stream[B]): Stream[B] = {
+    foldRight(other)((elem, acc) => cons(elem, acc))
+  }
 
-  def append[B >: A](other: => Stream[B]): Stream[B] = ???
+  def flatMap[B](f: A => Stream[B]): Stream[B] = {
+    foldRight(empty[B])((elem, acc) => f(elem).append(acc))
+  }
 
-  def flatMap[B](f: A => Stream[B]): Stream[B] = ???
-
-  def find(p: A => Boolean): Option[A] = ???
+  def find(p: A => Boolean): Option[A] = {
+    filter(p) headOption
+  }
 
 }
+
 case object Empty extends Stream[Nothing]
+
 case class Cons[+A](h: () => A, t: () => Stream[A]) extends Stream[A]
 
 object Stream {
@@ -139,7 +175,7 @@ object Stream {
 
   def fibs: Stream[Int] = ???
 
-  def unfold[A,S](z: S)(f: S => Option[(A,S)]): Stream[A] = ???
+  def unfold[A, S](z: S)(f: S => Option[(A, S)]): Stream[A] = ???
 
   def onesUnfold: Stream[Int] = ???
 
